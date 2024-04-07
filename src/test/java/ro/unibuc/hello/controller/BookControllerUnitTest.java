@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.mockito.InjectMocks;
@@ -112,24 +113,24 @@ class BookControllerUnitTest {
                 result.getResponse().getStatus());
     }
 
-    /*@Test
+    @Test
     void editBookSuccessfully() throws Exception {
         // Arrange
-        var id = 420;
+        String id = "420";
         BookEntity book = new BookEntity("Om bogat Om sarac", "Irwin Shaw");
-        var createBookDto = new CreateBookDto("Om bogat Om sarac", "Irwin Shaw");
-        when(bookRepository.findById(any())).thenReturn(Optional.of(book));
-        when(bookRepository.save(any())).thenReturn(Optional.of(book));
+        // var createBookDto = new CreateBookDto("Om bogat Om sarac", "Irwin Shaw");
+        
+        book.setId(id);
+        
+        when(bookRepository.findById(id)).thenReturn(Optional.of(book));
 
-        //Act
-        var result = mockMvc.perform(put("/books/{id}", id)
-                        .content(objectMapper.writeValueAsString(createBookDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+        when(bookRepository.save(any(BookEntity.class))).thenReturn(book);
+
+        //Act + assert
+        mockMvc.perform(put("/books/{id}", id)
+                .content(objectMapper.writeValueAsString(book))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andReturn();
-
-        // Assert
-        Assertions.assertEquals(objectMapper.writeValueAsString(book),
-                result.getResponse().getContentAsString());
-    }*/
+                .andExpect(content().json(objectMapper.writeValueAsString(book)));
+    }
 }
