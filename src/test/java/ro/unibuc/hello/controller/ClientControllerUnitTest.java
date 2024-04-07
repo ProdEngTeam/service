@@ -25,6 +25,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -128,24 +129,22 @@ class ClientControllerUnitTest {
                 result.getResponse().getContentAsString());
     }
 
-    /*@Test
+    @Test
     void editClientSuccessfully() throws Exception {
         // Arrange
-        var id = 1337;
+        String id = "1337";
         ClientEntity client = new ClientEntity("Arnold Einstein", "Cartea abecedar");
-        var createClientDto = new CreateClientDto("Arnold Einstein", "Cartea abecedar");
-        when(clientRepository.findById(any())).thenReturn(Optional.of(client));
-        when(clientRepository.save(any())).thenReturn(client);
+        
+        // Assuming CreateClientDto has a similar structure to ClientEntity for this example
+        CreateClientDto createClientDto = new CreateClientDto("Arnold Einstein Updated", "Cartea abecedar Updated");
+        when(clientRepository.findById(id)).thenReturn(Optional.of(client));
+        when(clientRepository.save(any(ClientEntity.class))).thenReturn(client);
 
-        //Act
-        var result = mockMvc.perform(put("/clients/{id}", id)
-                        .content(objectMapper.writeValueAsString(createClientDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+        // Act + assert
+        mockMvc.perform(put("/clients/{id}", id)
+                .content(objectMapper.writeValueAsString(createClientDto))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andReturn();
-
-        // Assert
-        Assertions.assertEquals(objectMapper.writeValueAsString(client),
-                result.getResponse().getContentAsString());
-    }*/
+                .andExpect(content().json(objectMapper.writeValueAsString(client)));
+    }
 }
