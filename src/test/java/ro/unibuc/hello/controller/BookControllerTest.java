@@ -2,14 +2,18 @@ package ro.unibuc.hello.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import ro.unibuc.hello.data.BookEntity;
 import ro.unibuc.hello.data.BookRepository;
 
@@ -20,11 +24,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+// @SpringBootTest
+// @AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 class BookControllerTest {
-
-    @Autowired
     private MockMvc mockMvc;
 
     @Mock
@@ -37,6 +41,7 @@ class BookControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
         objectMapper = new ObjectMapper();
     }
 

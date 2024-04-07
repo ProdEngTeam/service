@@ -1,6 +1,7 @@
 package ro.unibuc.hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,16 +87,19 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public void editclient(@PathVariable String id, ClientEntity clientEntity){
+    public ResponseEntity<ClientEntity> editClient(@PathVariable String id, @RequestBody ClientEntity clientEntity) {
         Optional<ClientEntity> optionalClient = clientRepository.findById(id);
 
-        if(optionalClient.isPresent()){
+        if (optionalClient.isPresent()) {
             ClientEntity client = optionalClient.get();
             client.setFullName(clientEntity.getFullName());
             client.setFavouriteBook(clientEntity.getFavouriteBook());
             client.setBooks(clientEntity.getBooks());
             clientRepository.save(client);
+            return ResponseEntity.ok(client);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        
     }
+
 }

@@ -44,15 +44,15 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public void editBooks(@PathVariable String id, BookEntity bookEntity){
+    public ResponseEntity<BookEntity> editBooks(@PathVariable String id, @RequestBody BookEntity bookEntity) {
         Optional<BookEntity> optionalBook = bookRepository.findById(id);
-
-        if(optionalBook.isPresent()){
+        if (optionalBook.isPresent()) {
             BookEntity book = optionalBook.get();
-            book.setAuthor(bookEntity.getAuthor());
-            book.setTitle(bookEntity.getTitle());
+            BeanUtils.copyProperties(bookEntity, book, "id");
             bookRepository.save(book);
+            return ResponseEntity.ok(book);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        
     }
 }
