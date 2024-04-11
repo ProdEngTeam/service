@@ -29,14 +29,21 @@ pipeline {
                 sh "docker push tudosestefan/hello-img:${MAJOR_VERSION}.\$((${MINOR_VERSION} + 1)).${PATCH_VERSION}"
 
                 sh "git tag ${env.IMAGE_TAG}"
-                sh "git push https://$GITHUB_TOKEN_PSW@github.com/<username>/service.git ${env.IMAGE_TAG}"
+                sh "git push https://$GITHUB_TOKEN_PSW@github.com/ProdEngTeam/service.git ${env.IMAGE_TAG}"
               }
+
         }
 
         stage('Create ENV Variable IMAGE_TAG'){
                     steps{
                         sh "IMAGE_TAG=${env.IMAGE_TAG} docker compose up -d hello mongo"
                     }
-                }
+        }
+
+        stage('Teste integrare'){
+            steps{
+                sh "./gradlew testE2E"
+            }
+        }
     }
 }

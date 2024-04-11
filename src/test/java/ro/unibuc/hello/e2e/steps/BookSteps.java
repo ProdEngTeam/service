@@ -70,17 +70,17 @@ public class BookSteps {
 
     @Given("^the client requests all books$")
     public void the_client_requests_all_books() {
-        executeGet("http://localhost:8080/books");
+        executeGet("http://host.docker.internal:8080/books");
     }
 
     @Given("^the client requests a book with id \"(.*)\"$")
     public void the_client_requests_book_with_id(String id) {
-        executeGet("http://localhost:8080/books/" + id);
+        executeGet("http://host.docker.internal:8080/books/" + id);
     }
 
     @And("^the client deletes the book with id \"(.*)\"$")
     public void the_client_deletes_book_with_id(String id) {
-        restTemplate.delete("http://localhost:8080/books/" + id);
+        restTemplate.delete("http://host.docker.internal:8080/books/" + id);
     }
 
     public void executeGet(String url) {
