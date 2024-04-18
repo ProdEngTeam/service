@@ -99,16 +99,4 @@ public class BookSteps {
             }
         });
     }
-
-    @Given("a book with title {string} and author {string}")
-    public void a_book_with_title_and_author(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @When("the client sends a POST request to \\/books")
-    public void the_client_sends_a_post_request_to_books() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 }

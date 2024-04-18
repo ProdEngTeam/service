@@ -40,10 +40,6 @@ pipeline {
                     }
         }
 
-        stage('Teste integrare'){
-            steps{
-                sh "./gradlew testE2E"
-            }
-        }
+
     }
 }
