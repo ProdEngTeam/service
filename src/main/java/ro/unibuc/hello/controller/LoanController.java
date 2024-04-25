@@ -2,8 +2,9 @@ package ro.unibuc.hello.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ro.unibuc.hello.data.BookRepository;
-import ro.unibuc.hello.data.ClientRepository;
+
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import ro.unibuc.hello.data.LoanEntity;
 import ro.unibuc.hello.data.LoanRepository;
 import java.time.LocalDate;
@@ -29,7 +30,10 @@ public class LoanController {
     //     return loanRepository.save(loan);
     // }
 
-    @GetMapping
+    @GetMapping("/get-loans")
+    @ResponseBody
+    @Timed(value = "hello.loan.time", description = "Time taken to return a loan")
+    @Counted(value = "hello.loan.count", description = "Times loan was returned")
     public List<LoanEntity> getAllLoans() {
         return loanRepository.findAll();
     }

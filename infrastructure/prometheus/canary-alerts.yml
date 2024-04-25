@@ -2,7 +2,7 @@ groups:
   - name: CanaryAlerts
     rules:
       - alert: WARNING-NoThroughout
-        expr: rate(hello_info_count_total[1m]) == 0
+        expr: rate(hello_loan_count_total[1m]) == 0
         for: 10s
         labels:
           severity: warning
