@@ -11,9 +11,10 @@ route:
 receivers:
 - name: 'email'
   email_configs:
-  - to: 'EMAIL@gmail.com'
-    from: 'EMAIL@gmail.com'
-    smarthost: smtp.gmail.com:587
-    auth_username: 'EMAIL@gmail.com'
-    auth_identity: 'EMAIL@gmail.com'
-    auth_password: 'GENERATE ONE FROM https://security.google.com/settings/security/apppasswords'
+  - to: 'rasckey817@gmail.com'
+    from: 'mailtrap@demomailtrap.com'
+    smarthost: 'live.smtp.mailtrap.io:587'
+    auth_username: 'api'
+    auth_password: '985a9ca82363e65307e43e3ef570554f'
+    auth_identity: ''
+    require_tls: true

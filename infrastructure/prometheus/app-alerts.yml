@@ -2,7 +2,7 @@ groups:
   - name: AppAlerts
     rules:
       - alert: WARNING-HighThroughput
-        expr: rate(hello_loan_count_total[1m]) > 1
+        expr: rate(hello_loan_count_total[30s]) > 1
         for: 1s
         labels:
           severity: warning
